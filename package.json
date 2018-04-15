@@ -1,0 +1,19 @@
+{
+  "name": "pocketpantry",
+  "version": "1.0.0",
+  "description": "\"digital pantry and recipe book\"",
+  "main": "assets/js/pantry.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bobby-Lishez/pocketpantry.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bobby-Lishez/pocketpantry/issues"
+  },
+  "homepage": "https://github.com/Bobby-Lishez/pocketpantry#readme"
+}

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+      <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="assets/css/login.css">
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-auth.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/2.6.3/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.6.3/firebaseui.css" />
+    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+
+  <i class="em em-some-emoji"></i>
+
+    <meta charset="UTF-8">
+    <title>Pocket Pantry</title>
+    <style>
+    </style>
+
+</head>
+
+<body>
+        <div class="container-fluid mx-auto">
+            <div class="row">
+                <div class="col logo">
+                    <img src="assets/images/logo.png">
+                </div>
+            </div>
+        </div>
+    <!-- Input Form -->
+    <div class="container">
+        <div class="col-xs-8 col xs-offset-2">
+        </div>
+    </div>
+    <hr>
+    <!-- food list -->
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-light accordionButton" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <i><i class="em em-bacon"></i></i> 
+                       My Pantry
+                    </button>
+                    
+                </h5>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+
+                <div class="row">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <div>
+                            <nav class="navbar navbar-light bg-light">
+                            <form class="form-inline">
+                                <input class="form-control mr-sm-2" type="text" placeholder="eg Fridge" id="addShelf" aria-label="Search">
+                                <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" id="shelfBtn">Add Shelf</button>
+                            </form>
+                            </nav>
+                            <div id = "pantry"></div>
+                        </div>
+                    </div>
+                    <!-- API SEARCH BUTTON-->
+                        <div class="col-9">
+                            <div class="addfood">
+                                <nav class="navbar navbar-light bg-light">
+                                    <form class="form-inline">
+                                        <!-- <input class="form-control mr-sm-2" type="text" placeholder="eg Eggs" id="additem" aria-label="Search"> -->
+                                        <table id = "addFoodTable" class = "table">
+                                                <thead>
+                                                    <tr>    
+                                                            <th id = "addFoodTableIng">Ingredient</th>
+                                                            <th id = "addFoodTableMeas">Amt.</th>
+                                                            <th id = "addFoodTableUnit">Unit</th>
+                                                            <!-- <th id = "tableAdd"></th> -->
+                                                    </tr>
+                                                </thead>
+                                                <tbody id = "addFoodTableIngredients">
+                                                    <div class = "form-group row">
+                                                        <td><!--where to enter the name of the ingredient-->
+                                                            <input type = "text" class = "form-control ingredient" id = "addFoodName">
+                                                        </td>
+                                                        <td><!--enter the amount as a number-->
+                                                            <input type = "number" class = "form-control measure" id = "addFoodMeas">
+                                                        </td>
+                                                        <td><!--enter the unit of measure-->
+                                                            <select class = "form-control unit" id = "addFoodUnit">
+                                                                <option>-----</option>
+                                                                <option>each</option>
+                                                                <option>tsp</option>
+                                                                <option>Tbsp</option>
+                                                                <option>cup(s)</option>
+                                                                <option>qt</option>
+                                                                <option>gal</option>
+                                                                <option>oz</option>
+                                                                <option>lbs</option>
+                                                                <option>ml</option>
+                                                                <option>L</option>
+                                                                <option>mg</option>
+                                                                <option>g</option>
+                                                                <option>Kg</option>
+                                                            </select>
+                                                        </td>
+                                                        <td><!--button to add another ingredient-->
+                                                            <!-- <button class = "addIngredient" id = "addIng1"><strong>+</strong></button> -->
+                                                        </td>
+                                                    </div>
+                                                </tbody>
+                                            </table>
+                                        <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" id="addFoodBtn" type="submit">Add Food</button>
+                                    </form>
+                                </nav>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn btn-light accordionButton2" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      <i><i class="em em-canned_food"></i></i>
+                        Grocery List
+                       
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-1">
+                        </div>
+                        <div class="col-7">
+                            <ul id="grocery">
+                        </div>
+                        <!-- API SEARCH BUTTON-->
+                        <div class="col-4">
+                            <div class="addfood">
+                                <nav class="navbar navbar-light bg-light">
+                                    <form class="form-inline">
+                                        <input class="form-control mr-sm-2" type="text" placeholder="Search" id="additem1" aria-label="Search">
+                                        <button class="btn btn-outline-success my-2 my-sm-0" id="submit1" type="submit">Add Food</button>
+                                    </form>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <button class="btn btn-light accordionButton3" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      <i><i class="em em-dango"></i></i>
+                        Recipe Search/My Recipes
+                        
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                   <div class = "container">
+    <form id = "recipeSearchForm" >
+        <input type = "text" id = "recipeSearch">
+        <button clas = "btn btn-primary" id = "go">Search for a recipe</button>
+    </form>
+    <div id = "recipeSearchResults"></div>
+    <button class="btn btn-primary expandButton" type="button" data-toggle="collapse" data-target="#recipeList" aria-expanded="false" aria-controls="recipeList">
+            My Recipes
+    </button>
+    <div class="collapse" id="recipeList">
+        <div class="card card-body" id = "recipeListCard"></div>
+    </div><br>
+    <button class = "btn btn-primary expandButton" type = "button" data-toggle = "collapse" data-target = "#addRecipeForm" aria-expanded = "false" aria-controls = "addRecipeForm">
+        Add your own recipe
+    </button>
+    <div class = "collapse" id = "addRecipeForm">
+        <!-- <div class = "card card-body"> -->
+                <div class = "form-group" id = "recipeNameGroup">
+                        <label for = "recipeName">Recipe Name: </label>
+                        <input type = "text" id = "recipeName">
+                    </div>
+                    <table id = "ingTable" class = "table">
+                        <thead>
+                            <tr>    
+                                    <th id = "tableIng">Ingredient</th>
+                                    <th id = "tableMeas">Amt.</th>
+                                    <th id = "tableUnit">Unit</th>
+                                    <th id = "tableAdd"></th>
+                            </tr>
+                        </thead>
+                        <tbody id = "ingredients">
+                            <div class = "form-group row">
+                                <td><!--where to enter the name of the ingredient-->
+                                    <input type = "text" class = "form-control ingredient" id = "ing1">
+                                </td>
+                                <td><!--enter the amount as a number-->
+                                    <input type = "number" class = "form-control measure" id = "meas1">
+                                </td>
+                                <td><!--enter the unit of measure-->
+                                    <select class = "form-control unit" id = "unit1">
+                                        <option>-----</option>
+                                        <option>each</option>
+                                        <option>tsp</option>
+                                        <option>Tbsp</option>
+                                        <option>cup(s)</option>
+                                        <option>qt</option>
+                                        <option>gal</option>
+                                        <option>oz</option>
+                                        <option>lbs</option>
+                                        <option>ml</option>
+                                        <option>L</option>
+                                        <option>mg</option>
+                                        <option>g</option>
+                                        <option>Kg</option>
+                                    </select>
+                                </td>
+                                <td><!--button to add another ingredient-->
+                                    <button class = "addIngredient" id = "addIng1"><strong>+</strong></button>
+                                </td>
+                            </div>
+                        </tbody>
+                    </table>
+                    <div class = "form-group">
+                        <label for="directions">Directions:</label>
+                        <textarea class = "form-control" id = "directions" rows = "5"></textarea>
+                    </div>
+                    <button class = "btn btn-primary" id = "addRecipe">Done</button>
+        <!-- </div> -->
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+    <!-- <script src="assets/html5sortable.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <!-- <script type="text/javascript" src="assets/js/login.js"></script> -->
+    <script src="assets/js/jquery-ui.js"></script>
+    <!-- <script src="assets/js/app.js"></script> -->
+    <script src = "assets/js/recipes.js"></script>
+    <script src = "assets/js/pantry.js"></script>
+            
+          
+          
+</body>
+
+</html>

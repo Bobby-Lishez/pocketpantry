@@ -1,0 +1,118 @@
+
+.jumbotron{
+	opacity:0.9;
+}
+.logo {
+    text-align: center;
+}
+.card{
+	opacity: .9;
+	
+}
+.accordionButton{
+	width: 100%;
+	background-color: #C3CACC;
+
+}
+
+.accordionButton2{
+	width: 100%;
+	background-color: #C3CACC;
+
+}
+.accordionButton3{
+	width: 100%;
+	background-color: #C3CACC;
+
+}
+ul {
+    list-style-type: none; 
+} 
+
+ul#grocery {
+    list-style-image: url('checkbox.png');
+}
+
+.foods {
+    font-size:12pt;
+}
+
+.foods:hover {
+    color:gray;
+    cursor:crosshair;
+}
+
+.shelf {
+    font-size:16pt;
+    font-weight:bold;
+    border-bottom: solid 1px black;
+    padding-top:10px;
+}
+#tableIng {
+    width: 35%;
+        }
+#tableMeas {
+    width: 20%;
+        }
+#tableUnit {
+    width: 35%;
+        }
+#tableAdd {
+    width: 10%;
+        }
+#recipeNameGroup {
+    margin-top: 10px;
+}
+#recipeSearchForm {
+    margin-top: 10px;
+    margin-bottom: 2px;
+}
+.expandButton {
+    width: 100%;
+    text-align: center;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    margin-bottom: 2px;
+}
+.myRecipeNames {
+    width: 35%;
+}
+.myRecipeMeasures{
+    width: 20%;
+}
+.myRecipeUnits {
+    width:35%;
+}
+.myRecipeAvailable {
+    width: 10%;
+}
+
+
+
+
+
+
+body{background-image: url("../images/foodimage.jpg");
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+    }
+    @media screen and (min-width: width:980px;){
+
+        @media screen and (min-width: width:768px;){
+
+		body{
+			padding-top: 50px;
+		}
+		@media screen and (min-width: width:640px;){
+
+		body{
+			padding-top: 50px;
+		}
+ 
+}
+
+
+
