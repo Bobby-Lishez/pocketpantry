@@ -1,4 +1,206 @@
-//DOM selectors
+    //Dan's Firebase
+
+    $(document).ready(function () {
+        var database = firebase.database();
+        var currentUser;
+        // Create a callback which logs the current auth state
+
+
+        var pantryArray = [];
+        var foodCount = 0;
+
+        var groceryArray =[];
+        var groceryCount = 0;
+
+        var sortedArray = [];
+        var shelfCount = 0;
+
+        //Pantry Add
+        $("#submit").on("click", function (event) {
+            event.preventDefault();
+            
+            // $("#pantry").append(newFood);
+            var addItem = $("#additem").val().trim();
+            foodCount++;
+            database.ref("pantry/" + currentUser.uid).push(addItem);
+            $("#additem").val("");
+
+        });
+
+        //Shelf Add
+        $("#shelf").on("click", function (event) {
+            event.preventDefault();
+
+            var addShelf = $("#addshelf").val().trim();
+            database.ref("shelves/" + currentUser.uid).push(addShelf);
+            $("#addshelf").val("");
+        })
+
+        //Grocery Add
+        $("#submit1").on("click", function (event) {
+            event.preventDefault();
+            
+            // $("#pantry").append(newFood);
+            var addItem = $("#additem1").val().trim();
+            foodCount++;
+            database.ref("grocery/" + currentUser.uid).push(addItem);
+            $("#additem1").val("");
+
+        });
+
+        firebase.auth().onAuthStateChanged(function (user) {
+            console.log('authStateChanged', user);
+            if (user) {
+                currentUser = user;
+                console.log(user);
+                firebase.database().ref("pantry/" + currentUser.uid).on("child_added", function (snapshot) {
+                    // Log everything that's coming out of snapshot
+                    console.log(snapshot.val());
+                    pantryArray.push(snapshot.val());
+                    
+                    console.log(pantryArray);
+                    // Change the HTML to reflect
+                    
+
+                    var newFood = $("<li class='foods' id='deleteFood" + foodCount + "'>");
+                    newFood.attr("data-id", snapshot.key);
+                    newFood.append(" " + snapshot.val());
+                    var foodDelete = $("<img src='assets/images/close.png' class='delete' id='deleteFoodButton" + foodCount + "'>");
+                    //var foodDelete = $("<button class='btn-outline-danger btn-sm delete rounded-circle' id='deleteButton" + foodCount + "'>");
+                        foodCount++;
+                    foodDelete.attr(snapshot.key);
+                    foodDelete.css("pointer");
+                    foodDelete.addClass("checkbox");
+                    //foodDelete.append("x");
+                    newFood = newFood.append(foodDelete);
+                    $("#pantry").append(newFood);
+                    //update my recipe display
+                    $recipeListCard.empty();
+                    for (var i = 0; i < myRecipes.length; i++){
+                        displayRecipe(myRecipes[i], i);
+                    }
+
+
+                    $(document.body).on("click", ".checkbox", function (event) {
+                        var removeItem = $(this).parent().data("id");
+                        console.log(removeItem);
+                        firebase.database().ref("pantry/" + currentUser.uid).child(removeItem).remove();
+
+                        var target = parseInt(event.currentTarget.id.substr(16));
+                        console.log("target: " + target)
+                        console.log("before splice: " + pantryArray);
+                        pantryArray.splice(target, 1);
+                        console.log("after splice: " + pantryArray);
+                        console.log($("#deleteFood" + target));
+                        $("#deleteFood" + target).remove();
+                        //update my recipe display
+                        $recipeListCard.empty();
+                        for (var i = 0; i < myRecipes.length; i++){
+                            displayRecipe(myRecipes[i], i);
+                        }
+                    });
+                    
+                });
+
+                //Add "sorting shelves" section
+
+                firebase.database().ref("shelves/" + currentUser.uid).on("child_added", function (snapshelf) {
+                    // Log everything that's coming out of snapshot
+                    console.log(snapshelf.val());
+                    sortedArray.push(snapshelf.val());
+                    
+                    console.log(sortedArray);
+                    // Change the HTML to reflect
+                    
+
+                    var newShelf = $("<li class='shelf' id='deleteShelf" + shelfCount + "'>");
+                    newShelf.attr("data-id", snapshelf.key);
+                    newShelf.append(" " + snapshelf.val());
+                    var shelfDelete = $("<img src='assets/close.png' class='delete' id='deleteButton" + shelfCount + "'>");
+                    //var foodDelete = $("<button class='btn-outline-danger btn-sm delete rounded-circle' id='deleteButton" + foodCount + "'>");
+                        shelfCount++;
+                        shelfDelete.attr(snapshelf.key);
+                        shelfDelete.css("pointer");
+                        shelfDelete.addClass("checkbox2");
+                    //foodDelete.append("x");
+                    newShelf = newShelf.append(shelfDelete);
+                    $("#pantry").append(newShelf);
+
+
+                    $(document.body).on("click", ".checkbox2", function (event) {
+                        var removeShelf = $(this).parent().data("id");
+                        console.log(removeShelf);
+                        firebase.database().ref("shelves/" + currentUser.uid).child(removeShelf).remove();
+
+                        var target = parseInt(event.currentTarget.id.substr(12))
+                        sortedArray.splice(target, 1);
+                        $("#deleteShelf" + target).remove();
+                    });
+                    
+                });
+
+
+                // Add Groceries Section
+
+                firebase.database().ref("grocery/" + currentUser.uid).on("child_added", function (snapshot1) {
+                    // Log everything that's coming out of snapshot
+                    console.log(snapshot1.val());
+                    groceryArray.push(snapshot1.val());
+                    
+                    console.log(groceryArray);
+                    // Change the HTML to reflect
+                    
+
+                    var newFood1 = $("<li id='deleteFood1" + groceryCount + "'>");
+                    newFood1.attr("data-id", snapshot1.key);
+                    newFood1.append(" " + snapshot1.val());
+                    var foodDelete1 = $("<img src='assets/close.png' class='delete' id='deleteButton" + groceryCount + "'>");
+                        groceryCount++;
+                    foodDelete1.attr(snapshot1.key);
+                    foodDelete1.addClass("checkbox1");
+                    //foodDelete1.append("X");
+                    newFood1 = newFood1.append(foodDelete1);
+                    $("#grocery").append(newFood1);
+
+
+                    $(document.body).on("click", ".checkbox1", function (event) {
+                        var removeItem1 = $(this).parent().data("id");
+                        console.log(removeItem1);
+                        firebase.database().ref("grocery/" + currentUser.uid).child(removeItem1).remove();
+
+                        var target1 = parseInt(event.currentTarget.id.substr(12))
+                        groceryArray.splice(target1, 1);
+                        $("#deleteFood1" + target1).remove();
+                    });
+                    
+                });
+
+
+            } else {
+                window.location.replace("index.html");
+            }
+
+
+        });
+
+    // }); 
+
+
+
+    //Sammy's Sort Items
+    $(function() {
+        $(".sortable").sortable();
+        $(".sortable").disableSelection();
+    });
+    //Sammy's Add a Shelf Section
+    $("#sortsection").on("click", function(event) {
+        event.preventDefault();
+        var newSection = $("#addsection").val().trim();
+        $("#pantry").append("<ul class='sortable'>" + newSection);
+    });
+
+    //bobs recipe query
+    //DOM selectors
 var $recipeSearch = $("#recipeSearch"),
     $go = $("#go"),
     $recipeSearchResults = $("#recipeSearchResults"),
@@ -22,11 +224,11 @@ var searchResults = {};
 var currentIngredient = 1;
 
 // //sample pantry
-var pantryArray = {
-    names: ["flour", "butter", "sugar", "eggs", "baking soda", "baking powder", "salt"],
-    amounts: [10, 2, 10, 4, 8, 2, 1],
-    units: ["lbs", "lbs", "lbs", "-----", "oz", "oz", "lbs"]
-};
+// var pantryArray = {
+//     names: ["flour", "butter", "sugar", "eggs", "baking soda", "baking powder", "salt"],
+//     amounts: [10, 2, 10, 4, 8, 2, 1],
+//     units: ["lbs", "lbs", "lbs", "-----", "oz", "oz", "lbs"]
+// };
 
 //function to convert a recipe to a recipe object.
 function objectify(recipe) {
@@ -351,3 +553,17 @@ $(document).ready(function(){
         displayRecipe(myRecipes[i], i);
     }
 });
+
+                // User Signout
+                $("#logout").click(function () {
+                    firebase.auth().signOut().then(function () {
+                        // Sign-out successful.
+                        window.location.replace("index.html");
+                    }).catch(function (error) {
+                        // An error happened.
+                        console.log('Logout Error');
+                    });
+                });
+
+                
+            });                          

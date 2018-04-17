@@ -16,6 +16,11 @@ var $recipeSearch = $("#recipeSearch"),
     $pantry = $("#pantry");
 //array of recipe objects
 var myRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+//pantry object
+var myPantry = JSON.parse(localStorage.getItem("pantry")) || {
+    unShelved: [],
+    shelves: []
+};
 //array of units of measure to match
 var unitsOfMeasure = ["tsp" ,"tsp.", "teaspoon" , "teaspoons" , "tbsp" ,"tbsp.", 
                     "tablespoon" , "tablespoons" , "oz" ,"oz.", "ounce" , "ounces" , "cup" , "cups" , "c.",
@@ -27,8 +32,18 @@ var unitsOfMeasure = ["tsp" ,"tsp.", "teaspoon" , "teaspoons" , "tbsp" ,"tbsp.",
 var searchResults = {};
 //ingredient counter for adding recipes
 var currentIngredient = 1;
+var pantryArray = [];
 
-
+//constructor to create a new shelf
+function Shelf(name, int) {
+    this.name = name;
+    this.idNumber = int,
+    this.contents = {
+        names: [],
+        measures: [],
+        units: []
+    };
+}
 
 //function to convert a recipe to a recipe object.
 function objectify(recipe) {
@@ -162,7 +177,15 @@ function displayRecipe(recipe, int) {
     };
 };
 
-//click event listener for search button
+//function to display a shelf from myPantry
+function displayShelf(shelf) {
+    $pantry.append(
+        "<button class = 'btn btn-dark expandButton' id = 'shelf" + shelf.idNumber + "'>"+ shelf.name +"</button>" +
+        "<div class = collapse id = 'collapse-shelf" + shelf.idNumber + "'></div>"
+    );
+};
+
+//event listener for search button
 $go.click(function(event){
     event.preventDefault(); 
     var queryURL = "https://api.edamam.com/search?q="+ $recipeSearch.val().trim() +"&app_id=604fe6ae&app_key=04fae8d1362d3d0b9a9eade3d98b4b49";
@@ -181,7 +204,7 @@ $go.click(function(event){
         $recipeSearch.val("");    
 });
 
-//click event to add a search result to my recipes
+//event listener to add a search result to my recipes
 $(document).on("click", ".searchResultAddButton", function(event){
     var myRecipe = objectify(searchResults.hits[event.currentTarget.id]);
     myRecipes.push(myRecipe);
@@ -300,6 +323,23 @@ $addRecipe.click(function(event){
     );       
 });
 
+//event listener for the add shelf button
+$shelfBtn.click(function(event) {
+    event.preventDefault();
+    //grab the shelf name the user entered.
+    var name = $addShelf.val().trim();
+    $addShelf.val("");
+    //use the shelf name to construct a new shelf.
+    var newShelf = new Shelf(name, myPantry.shelves.length);
+    //Then push our new shelf to our pantry.
+    myPantry.shelves.push(newShelf);
+    //and append it to the screen.
+    displayShelf(newShelf);
+    //update the storage
+    localStorage.removeItem("pantry");
+    localStorage.setItem("pantry", JSON.stringify(myPantry));
+});
+
 //function to allow dynamically-created collapses to display
 $(document).on("click", ".resultButton", function(event){
     var target = "collapse-" + event.currentTarget.id;
@@ -351,5 +391,8 @@ $(document).on("click", ".buyIngredient", function(event) {
 $(document).ready(function(){
     for (var i = 0; i < myRecipes.length; i++){
         displayRecipe(myRecipes[i], i);
+    }
+    for (var i = 0; i < myPantry.shelves.length; i++){
+        displayShelf(myPantry.shelves[i]);
     }
 });

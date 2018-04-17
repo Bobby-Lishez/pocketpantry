@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Bobby-Lishez/pocketpantry/issues"
   },
-  "homepage": "https://github.com/Bobby-Lishez/pocketpantry#readme"
+  "homepage": "https://github.com/Bobby-Lishez/pocketpantry#readme",
+  "dependencies": {
+    "fs": "0.0.1-security"
+  }
 }

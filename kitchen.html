@@ -51,26 +51,21 @@
                 </h5>
             </div>
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-
+                <div class = "container-fluid">
                 <div class="row">
-                    <div class="col-1">
-                    </div>
-                    <div class="col-2">
-                        <div>
                             <nav class="navbar navbar-light bg-light">
                             <form class="form-inline">
                                 <input class="form-control mr-sm-2" type="text" placeholder="eg Fridge" id="addShelf" aria-label="Search">
                                 <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" id="shelfBtn">Add Shelf</button>
                             </form>
                             </nav>
-                            <div id = "pantry"></div>
-                        </div>
-                    </div>
+                    </div><!--row-->
                     <!-- API SEARCH BUTTON-->
-                        <div class="col-9">
+                        <div class="row">
                             <div class="addfood">
                                 <nav class="navbar navbar-light bg-light">
                                     <form class="form-inline">
+                                        <div class = "col-xs-9">
                                         <!-- <input class="form-control mr-sm-2" type="text" placeholder="eg Eggs" id="additem" aria-label="Search"> -->
                                         <table id = "addFoodTable" class = "table">
                                                 <thead>
@@ -113,11 +108,16 @@
                                                     </div>
                                                 </tbody>
                                             </table>
-                                        <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" id="addFoodBtn" type="submit">Add Food</button>
+                                            </div>
+                                            <div class = "col-xs-3">
+                                                 <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" id="addFoodBtn" type="submit">Add Food</button>
+                                            </div>
                                     </form>
                                 </nav>
                             </div>
                         </div>
+                        <div id = "pantry"></div>
+                        </div><!--conatiner-->
                 </div>
             </div>
         </div>
@@ -247,11 +247,8 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
     <!-- <script src="assets/html5sortable.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <!-- <script type="text/javascript" src="assets/js/login.js"></script> -->
     <script src="assets/js/jquery-ui.js"></script>
-    <!-- <script src="assets/js/app.js"></script> -->
-    <script src = "assets/js/recipes.js"></script>
-    <script src = "assets/js/pantry.js"></script>
+    <script src = "assets/js/pantryApp.js"></script>
             
           
           
